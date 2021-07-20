@@ -9,6 +9,74 @@
 <p> Movie API Application will provide users with access to information about different
     movies, directors, and genres. Users will be able to sign up, update their
     personal information, and create a list of their favorite movies</p>
+  
+   <div class="endpoint-table">
+    <table>
+      <thead>
+        <tr>
+            <th>Request</th>
+            <th>Method</th>
+            <th>URL</th>
+            <th>Response</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Return a list of ALL movies to the user</td>
+          <td>GET</td>
+          <td>/movies</td>
+          <td>A JSON object holding data about all the movies</td>
+        </tr>
+        <tr>
+          <td>Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user</td>
+          <td>GET</td>
+          <td>/movies/[Title]</td>
+          <td>A JSON object with movie title, cover art, description, genre,
+            featured film, director, actors</td>
+        </tr>
+        <tr>
+          <td>Return data about a genre (description) by name/title</td>
+          <td>GET</td>
+          <td>/movies/[genre]</td>
+          <td>A JSON object contain data about all the genres</td>
+        </tr>
+        <tr>
+          <td>Return data about a director</td>
+          <td>GET</td>
+          <td>/directors/[directors name]</td>
+          <td>A JSON object contain data about director chose, bio, holding name, birthyear and movies</td>
+        </tr>
+        <tr>
+          <td>Allow new users to register</td>
+          <td>POST</td>
+          <td>/users</td>
+          <td>A JSON object holding data about the user</td>
+        </tr>
+        <tr>
+          <td>Allow users to update their user info</td>
+          <td>PUT</td>
+          <td>/users/[username]</td>
+          <td>A JSON object holding data about the users update</td>
+        </tr>
+        <tr>
+          <td>Allow existing users to deregister</td>
+          <td>DELETE</td>
+          <td>/users/[username]</td>
+          <td>A response that the account has been deleted</td>
+        </tr>
+        <tr>
+          <td>Allow users to add a movie to their list of favorites</td>
+          <td>POST</td>
+          <td>/users/[username]/movies/[movieID]</td>
+          <td>A JSON object holding data about the movie added into favorite list</td>
+        </tr>
+        <tr>Allow users to remove a movie from their list of favorites</tr>
+        <tr>POST</tr>
+        <tr>/users/[username]/movies/[movieID]</tr>
+        <tr>A JSON object holding data about the updated favorite list</tr>
+      </tbody>
+    </table>
+  </div>
 
 </body>
 </html>
