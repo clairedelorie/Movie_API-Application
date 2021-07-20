@@ -70,6 +70,43 @@ app.get('/', (req,res) => {
     res.send('Welcome! Thanks for checking out my movie API!');
 });
 
+//get all movies
+app.get('/movies', (req, res) => {
+    res.send('Successful GET request returning data on all the movies');
+});
+
+app.get('/movies/:Title', (req, res) => {
+    res.send('Successful GET request returning data on movies by title');
+});
+
+app.get('/movies/:genre', (req, res) => {
+    res.send('Successful GET request returning data on movies by genre');
+});
+
+app.get('/directors/:directors name', (req, res) => {
+    res.send('Successful GET request returning data on all the directors');
+});
+
+app.post('/users', (req, res) => {
+    res.send('Successful POST request allowing user to register');
+});
+
+app.put('/users/:username', (req, res) => {
+    res.send('Successful PUT request allowing users to update info');
+});
+
+app.delete('/users/:username', (req, res) => {
+    res.send('Successful DELETE request allowing users to deregister');
+});
+
+app.post('/users/:username/movies/:movieID', (req, res) => {
+    res.send('Successful POST request allowing users to add movies to a favorites list');
+});
+
+app.post('/users/:username/movies/:movieID', (req, res) => {
+    res.send('Successful POST request allowing users to delete movies from a favorites list');
+});
+
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
