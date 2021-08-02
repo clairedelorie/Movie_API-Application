@@ -53,39 +53,47 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
 
 //Get all movies by genre
 app.get('/genres', passport.authenticate('jwt', { session: false }), (req, res) => {
-    genres.find()
-    .then((genres) => {
-    res.status(201).json(genres);
+    Movies.find()
+    .then((movies) => {
+        const genres = movies.reduce(
+            (gs, m) => !gs.find((g) => g.Name === m.Genre.Name) ? [ ...gs, m.Genre ] : gs,
+            []
+          );
+    res.json(genres);
     })
     .catch((err) => {
-    console.error(err);
-    res.status(500).send('Error: ' + err);
+        console.error(err);
+        res.status(500).send('Error: ' + err);
     });
-    });
+});
 
 //Get a movie by genre name
 app.get('/genres/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
     Genres.findOne({ Name: req.params.Name })
       .then((genre) => {
-        res.json(genre.Description);
+        res.json(genre);
       })
       .catch((err) => {
         console.error(err);
         res.status(500).send('Error: ' + err);
       });
-  });
+});
 
 //Get all directors
 app.get('/directors', passport.authenticate('jwt', { session: false }), (req, res) => {
-    genres.find()
-    .then((directors) => {
-    res.status(201).json(directors);
+    Movies.find()
+    .then((movies) => {
+        const directors = movies.reduce(
+            (ds, m) => !ds.find((d) => d.Name === m.Director.Name) ? [ ...ds, m.Director ] : ds,
+            []
+          );
+    res.json(directors);
     })
     .catch((err) => {
     console.error(err);
     res.status(500).send('Error: ' + err);
     });
-    });
+});
 
   //Get a director by name
 app.get('/director/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -97,7 +105,7 @@ app.get('/director/:Name', passport.authenticate('jwt', { session: false }), (re
       console.error(err);
       res.status(500).send('Error: ' + err);
     });
-  }); 
+}); 
 
 //Get all users
 app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
