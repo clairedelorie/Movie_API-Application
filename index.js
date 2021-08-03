@@ -4,6 +4,9 @@ const morgan = require('morgan');
 const app = express();
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+const cors = require('cors');
+const { check, validationResult } = require('express-validator');
+
 
 
 const Movies = Models.Movie;
@@ -21,7 +24,7 @@ require('./passport');
 
 app.use(express.static('public'));
 app.use(morgan('common'));
-
+app.use(cors());
 
 app.get('/', (req,res) => {
    res.send("Welcome to MyFlix!");
@@ -69,9 +72,13 @@ app.get('/genres', passport.authenticate('jwt', { session: false }), (req, res) 
 
 //Get a movie by genre name
 app.get('/genres/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
-    Genres.findOne({ Name: req.params.Name })
-      .then((genre) => {
-        res.json(genre);
+    Movies.findOne({ Name: req.params.Name })
+      .then((movies) => {
+        const genres = movies.reduce(
+            (gs, m) => !gs.find((g) => g.Name === m.Genre.Name) ? [ ...gs, m.Genre ] : gs,
+            []
+          );
+        res.json(genres);
       })
       .catch((err) => {
         console.error(err);
@@ -97,8 +104,12 @@ app.get('/directors', passport.authenticate('jwt', { session: false }), (req, re
 
   //Get a director by name
 app.get('/director/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
-    Directors.findOne({ Name: req.params.Name })
-    .then((director) => {
+    Movies.findOne({ Name: req.params.Name })
+    .then((movies) => {
+        const directors = movies.reduce(
+            (ds, m) => !ds.find((d) => d.Name === m.Director.Name) ? [ ...ds, m.Director ] : ds,
+            []
+          );
       res.json(director);
     })
     .catch((err) => {
@@ -140,7 +151,26 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
   Email: String,
   Birthday: Date
 }*/
-app.post('/users', (req, res) => {
+app.post('/users', 
+// Validation logic here for request
+//you can either use a chain of methods like .not().isEmpty()
+//which means "opposite of isEmpty" in plain english "is not empty"
+//or use .isLength({min: 5}) which means
+//minimum value of 5 characters are only allowed
+[
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+], (req, res) => {
+
+// check the validation object for errors
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOne({ Username: req.body.Username })
       .then((user) => {
         if (user) {
