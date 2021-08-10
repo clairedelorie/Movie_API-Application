@@ -1,0 +1,4 @@
+{"_id":{"$oid":"60fcc8c0ac1bc45b5f4cc62d"},"Username":"Watsonboy","Password":"Doggo456","Email":"watsonboy@hotmail.com","Birthdate":"1992/01/20","FavoriteMovies":[{"$oid":"60fc9150ac1bc45b5f4cc628"}]}
+{"_id":{"$oid":"60fcc9aeac1bc45b5f4cc62f"},"Username":"teddybear","Password":"pandalove753","Email":"bigpoppabear@gmail.com","Birthdate":"1965/11/23","FavoriteMovies":[{"$oid":"60fc9357ac1bc45b5f4cc62b"}]}
+{"_id":{"$oid":"60fcca0eac1bc45b5f4cc630"},"Username":"spookywitch","Password":"Halloween49","Email":"spookywitch@gmail.com","Birthdate":"1988/10/31","FavoriteMovies":[{"$oid":"60fc8edfac1bc45b5f4cc625"}]}
+{"_id":{"$oid":"60fcca94ac1bc45b5f4cc631"},"Username":"wolfybabe33","Password":"hoWling1","Email":"wolfybabe33@yahoo.com","Birthdate":"1975/02/16","FavoriteMovies":[{"$oid":"60fc8fc0ac1bc45b5f4cc627"}]}
