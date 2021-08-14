@@ -35,5 +35,5 @@ const movies = mongoose.model("movies", movieSchema);
 const users = mongoose.model("users", userSchema);
 
 
-module.exports.Movie = movies;
-module.exports.User = users;
+module.exports.movies = movies;
+module.exports.users = users;
