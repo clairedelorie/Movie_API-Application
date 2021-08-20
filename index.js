@@ -9,8 +9,6 @@ const { check, validationResult } = require("express-validator");
 
 const Movies = Models.Movie;
 const Users = Models.User;
-const Genres = Models.Genre;
-const Directors = Models.Director;
 
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
@@ -19,13 +17,13 @@ mongoose.connect(process.env.CONNECTION_URI, {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const auth = require("./auth")(app);
+app.use(morgan("common"));
+app.use(cors());
+require("./auth")(app);
 const passport = require("passport");
 require("./passport");
 
 app.use(express.static("public"));
-app.use(morgan("common"));
-app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Welcome to MyFlix!");
