@@ -29,7 +29,15 @@ app.get("/", (req, res) => {
   res.send("Welcome to MyFlix!");
 });
 
-//get all movies
+/**
+ * Get all movie and movie details
+ * @method GET
+ * @param {string} endpoint fetches movies
+ * @returns {object} - Returns movies and data
+ * @requires authentication JWT
+
+ */
+
 app.get(
   "/movies",
   passport.authenticate("jwt", { session: false }),
@@ -45,7 +53,14 @@ app.get(
   }
 );
 
-//Get a movie by title
+/**
+ * Return data about a single movie
+ * @method GET
+ * @param {string} (title) endpoint
+ * @returns {object} data about a single movie
+ * @requires authentication JWT
+ */
+
 app.get(
   "/movies/:Title",
   passport.authenticate("jwt", { session: false }),
@@ -61,7 +76,14 @@ app.get(
   }
 );
 
-//Get all movies by genre
+/**
+ *  Get movies with specific genre
+ * @method GET
+ * @param {string} endpoint - Endpoint fetch genre details.
+ * @param {string} name - Genre Name is used to get specific genre details
+ * @returns {object} - Returns all movies with specific genre
+ */
+
 app.get(
   "/genres",
   passport.authenticate("jwt", { session: false }),
@@ -82,7 +104,14 @@ app.get(
   }
 );
 
-//Get a movie by genre name
+/**
+ * Return specific genre data
+ * @method GET
+ * @param {string} (name) endpoint
+ * @returns {object} data of a genre
+ * @requires authentication JWT
+ */
+
 app.get(
   "/genres/:Name",
   passport.authenticate("jwt", { session: false }),
@@ -98,7 +127,13 @@ app.get(
   }
 );
 
-//Get all directors
+/**
+ * Gets all directors
+ * @method GET
+ * @param {string} endpoint - Endpoint to fetch director collection
+ * @returns {object} - Returns directors as objects
+ */
+
 app.get(
   "/directors",
   passport.authenticate("jwt", { session: false }),
@@ -121,7 +156,14 @@ app.get(
   }
 );
 
-//Get a director by name
+/**
+ * Return data about a director by name
+ * @method GET
+ * @param {string} (name) endpoint
+ * @returns {object} data of a director
+ * @requires authenticate JWT
+ */
+
 app.get(
   "/director/:Name",
   passport.authenticate("jwt", { session: false }),
@@ -137,7 +179,15 @@ app.get(
   }
 );
 
-//Get all users
+/**
+ * Allow new users to register
+ * @method POST
+ * @param {object} object containing user details
+ * @returns {object} json-object added user
+ * @requires properties username, password, email
+ * @requires auth no authentication - public
+ */
+
 app.get(
   "/users",
   passport.authenticate("jwt", { session: false }),
@@ -153,7 +203,14 @@ app.get(
   }
 );
 
-// Get a user by username
+/**
+ * Get information on one user
+ * @method GET
+ * @param {string} (username) endpoint
+ * @returns {object} containing data of one user
+ * @requires authentication JWT
+ */
+
 app.get(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -169,22 +226,17 @@ app.get(
   }
 );
 
-//Add a user
-/* We’ll expect JSON in this format
-{
-  ID: Integer,
-  Username: String,
-  Password: String,
-  Email: String,
-  Birthday: Date
-}*/
+/**
+ * Allow new users to register
+ * @method POST
+ * @param {object} object containing user details
+ * @returns {object} json-object added user
+ * @requires properties username, password, email
+ * @requires auth no authentication - public
+ */
+
 app.post(
   "/users",
-  // Validation logic here for request
-  //you can either use a chain of methods like .not().isEmpty()
-  //which means "opposite of isEmpty" in plain english "is not empty"
-  //or use .isLength({min: 5}) which means
-  //minimum value of 5 characters are only allowed
   [
     check("Username", "Username is required").isLength({ min: 5 }),
     check(
@@ -229,17 +281,15 @@ app.post(
   }
 );
 
-// Update a user's info, by username
-/* We’ll expect JSON in this format
-{
-  Username: String,
-  (required)
-  Password: String,
-  (required)
-  Email: String,
-  (required)
-  Birthday: Date
-}*/
+/**
+ * Allow users to update their username
+ * @method PUT
+ * @param {object} object containing user details
+ * @returns {object} json-object added user
+ * @requires properties username, password, email
+ * @requires authentication JWT
+ */
+
 app.put(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -267,7 +317,14 @@ app.put(
   }
 );
 
-// Delete a user by username
+/**
+ * Allow users to delete account
+ * @method DELETE
+ * @param {string} (username) endpoint
+ * @returns {statusMessage} success/error
+ * @requires authentication JWT
+ */
+
 app.delete(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -287,7 +344,14 @@ app.delete(
   }
 );
 
-// Add a movie to a user's list of favorites
+/**
+ * Allow users to add a movie to their list of favorites
+ * @method POST
+ * @param {string} (username, movies, movieId) endpoint
+ * @returns {statusMessage} success/error
+ * @requires authentication JWT
+ */
+
 app.post(
   "/users/:Username/movies/:MovieID",
   passport.authenticate("jwt", { session: false }),
@@ -310,7 +374,14 @@ app.post(
   }
 );
 
-// Delete a movie to a user's list of favorites
+/**
+ * Allow users to deltee a movie from their list of favorites
+ * @method DELETE
+ * @param {string} (username, movies, movieId) endpoint
+ * @returns {statusMessage} success/error
+ * @requires authentication JWT
+ */
+
 app.delete(
   "/users/:Username/movies/:MovieID",
   passport.authenticate("jwt", { session: false }),
